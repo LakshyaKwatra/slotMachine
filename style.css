@@ -78,8 +78,8 @@ section#Gira:hover{
 section#options{
   position: absolute;
   background-color:rgba(28, 128, 126,0.9);
-  transform: translate(900%, -10%); 
-	margin-top: 20px;
+  margin-top: 13px;
+  margin-left: 13px;
 	padding-top: 5px;
   border-radius: 50%;
 	color: #000000;
