@@ -20,18 +20,13 @@
 		<section onclick="doSlot()" id="Gira">TAKE A SPIN!</section>
 		</section>
 </main>
-<!-- <section id="info">
-	<h3>Come si Gioca?</h3>
-	<p>Tenta la tua fortuna premendo il bottone! Il Jolly vale l'elemento mancante per vincere. Tre elementi uguali e vinici! Ma attenzione, non prendere tre Jolly o perderai!</p>
-	<h3>Licenza</h3>
-	<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licenza Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Quest'opera è distribuita con Licenza <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribuzione - Non commerciale - Condividi allo stesso modo 4.0 Internazionale</a>.</p>
-</section> -->
 
 <script>
 var doing = false;
 var spin = [new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3"),new Audio("res/sounds/spin.mp3")];
 var coin = [new Audio("res/sounds/coin.mp3"),new Audio("res/sounds/coin.mp3"),new Audio("res/sounds/coin.mp3")]
 var win = new Audio("res/sounds/win.mp3");
+var victory = new Audio("res/sounds/victory.mp3")
 var lose = new Audio("res/sounds/lose.mp3");
 var audio = false;
 let status = document.getElementById("status")
@@ -100,6 +95,7 @@ function doSlot(){
 	}
 }
 
+let doubleCounter = 0;
 function testWin(){
 	var slot1 = document.getElementById("slot1").className
 	var slot2 = document.getElementById("slot2").className
@@ -107,13 +103,22 @@ function testWin(){
 
 	if (slot1 == slot2 && slot2 == slot3){
 		status.innerHTML = "YOU WIN!";
-		win.play();
+		victory.play();
 	}else if (slot1 == slot2 || slot2 == slot3 || slot1 == slot3){
-		status.innerHTML = "YOU GET ANOTHER TURN!";
-		win.play();
+		doubleCounter++;
+		if(doubleCounter < 3){
+			status.innerHTML = "YOU GET ANOTHER TURN!";
+			win.play();
+		} else{
+			status.innerHTML = "YOU WIN!";
+			victory.play();
+			doubleCounter = 0;
+		}
+
 	} else{
 		status.innerHTML = "YOU LOSE!"
 		lose.play();
+		doubleCounter = 0;
 	}
 	doing = false;
 }
